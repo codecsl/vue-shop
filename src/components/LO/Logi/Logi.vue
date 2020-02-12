@@ -28,13 +28,14 @@
 <script>
 import loginitem from "components/LO/loginitem/Loginltem.vue";
 import { getlogindata } from "network/login.js";
+
 export default {
   name: "component_name",
   data() {
     return {
       form1: {
-        username: "",
-        password: ""
+        username: "admin",
+        password: "123456"
       },
       rules: {
         username: [
@@ -59,7 +60,6 @@ export default {
       this.$refs.logRef.validate(valid => {
         if (!valid) return;
         getlogindata(this.form1.username, this.form1.password).then(res => {
-          console.log(res);
           window.sessionStorage.setItem("token", res.data.data.token);
           if (res.data.meta.status != "200")
             return this.$message.error("登录失败");

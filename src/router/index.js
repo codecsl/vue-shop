@@ -6,17 +6,26 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path:"/",
+    path: "/",
     redirect: "/login"
 
   },
   {
     path: "/login",
-    component:()=>import("../components/LO/Login/Login.vue")
+    component: () => import("../components/LO/Login/Login.vue")
   },
   {
-    path:"/home",
-    component:()=>import("../views/Home.vue")
+    path: "/home",
+    component: () => import("../views/Home.vue"),
+    redirect: "/defaul",
+    children: [
+      {
+        path: "/defaul",
+        component: () => import("../components/Homepage/main/defaul.vue")
+      }, {
+        path: "/users",
+        component: () => import("../components/Homepage/main/userviews/users.vue")
+      }]
   }
 ]
 
@@ -28,17 +37,17 @@ const router = new VueRouter({
 
 // 登录页权限问题
 router.beforeEach((to, from, next) => {
-  if(to.path=="/login"){
+  if (to.path == "/login") {
     return next()
-  }else{
-    const token= window.sessionStorage.getItem("token")
-    if(!token){
+  } else {
+    const token = window.sessionStorage.getItem("token")
+    if (!token) {
       return next("/login")
-    }else{
+    } else {
       next()
     }
   }
-  })
+})
 
 
 export default router

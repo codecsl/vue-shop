@@ -1,7 +1,7 @@
-import {request} from "./request"
+import {Req} from "./request"
 export function getlogindata(username,password){
-return request({
-    url:"/login",
+return Req({
+    url:"login",
     method:"post",
     data:{
         username:username,
