@@ -70,7 +70,7 @@
             placement="top-start"
             :enterable="false"
           >
-            <el-button type="warning" icon="el-icon-setting" circle @click="distributionuser"></el-button>
+            <el-button type="warning" icon="el-icon-setting" circle  @click="fenpeirole(scope.row)"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -140,6 +140,29 @@
         <el-button type="primary" @click="correct">修改</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+  title="分配角色"
+  :visible.sync="feidialogVisible"
+  width="50%"
+   class="jian">
+  <div>
+    <p>当前用户:{{feiroel.username}}</p>
+    <p>当前角色:{{feiroel.role_name}}</p>
+   <p>分配的角色:<el-select v-model="selectid" placeholder="请选择">
+    <el-option
+      v-for="item in frole"
+      :key="item.id"
+      :label="item.roleName"
+      :value="item.id">
+    </el-option>
+  </el-select></p>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="feidialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="qdfrole">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 <script>
@@ -150,7 +173,9 @@ import {
   Modify,
   correcto,
   deleteo,
-  distribution
+  distribution,
+  juese
+ 
 } from "network/shouye/userviews/users.js";
 export default {
   name: "component_name",
@@ -181,6 +206,10 @@ export default {
         //    跳转数设置
         tiaozhuanshu: [1, 2, 5, 8, 10]
       },
+      frole:[],
+      selectid:"",
+      feiroel:{},
+      feidialogVisible:false,
       total:[],
       pagesize: [],
       querytext: "",
@@ -296,8 +325,30 @@ export default {
       })
     
     },
-    distributionuser(){
+    fenpeirole(role){
+        this.feidialogVisible=true
+        this.feiroel=role
+        juese().then(res=>{
+         const {data:res1}=res
+         if(res1.meta.status!=200) return this.$message.error("获取角色失败")
+         this.frole=res1.data
+        })
         
+    },
+    qdfrole(){
+     if(this.selectid==""){
+       this.$message.error("请选择相应角色")
+     }
+     distribution(this.feiroel.id,this.selectid).then(res=>{
+    const {data:res1}=res
+     console.log(res1)
+    if(res1.meta.status!=200) return this.$message.error("更新失败")
+     this.$message.success("更新成功")
+
+    
+     })
+     this.feidialogVisible=false
+
     },
 
     // 封装数据请求
@@ -309,7 +360,7 @@ export default {
             return this.$message.error("获取用户列表失败");
           this.pagesize = res1.data.users;
           this.total=res1.data.users
-          console.log(this.total)
+          
         })
         .catch(res => {
           console.log(res);
@@ -327,6 +378,12 @@ export default {
   .el-table,
   .jian {
     line-height: 0;
+  }
+  .jian{
+    text-align: left;
+  }
+  .jian p{
+    margin-bottom: 25px;
   }
 }
 </style>

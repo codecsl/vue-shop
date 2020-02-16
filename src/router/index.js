@@ -25,7 +25,14 @@ const routes = [
       }, {
         path: "/users",
         component: () => import("../components/Homepage/main/userviews/users.vue")
-      }]
+      },{
+        path:"/rights",
+        component:()=>import("../components/Homepage/main/rightsviews/quanxian.vue")
+      },{
+          path:"/roles",
+          component:()=>import("../components/Homepage/main/rightsviews/role.vue")
+      }
+    ]
   }
 ]
 

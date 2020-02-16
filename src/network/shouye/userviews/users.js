@@ -56,7 +56,13 @@ export function distribution(id,role){
         url:`users/${id}/role`,
         method:"put",
         data:{
-role
+          role
         }
+    })
+}
+export function juese(){
+    return Req({
+        url:"roles",
+        method:"get"
     })
 }
