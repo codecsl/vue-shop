@@ -46,6 +46,10 @@ const routes = [
       {
         path:"/add",
         component:()=>import("../components/Homepage/main/goodslie/add.vue")
+      },
+      {
+        path:"/orders",
+        component:()=>import("../components/Homepage/main/dingdan/orders.vue")
       }
     ]
   }

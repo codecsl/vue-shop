@@ -38,7 +38,7 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
+        :current-page="morencan.pagenum"
         :page-sizes="[1, 3, 5, 7]"
         :page-size="morencan.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
