@@ -31,6 +31,21 @@ const routes = [
       },{
           path:"/roles",
           component:()=>import("../components/Homepage/main/rightsviews/role.vue")
+      },{
+        path:"/goods",
+        component:()=>import("../components/Homepage/main/goodslie/goodsliebiao.vue")
+       
+      },
+      {
+        path:"/categories",
+        component:()=>import("../components/Homepage/main/goodslie/goodsfeilei.vue")
+      },{
+        path:"/params",
+        component:()=>import("../components/Homepage/main/goodslie/goodscanshu.vue")
+      },
+      {
+        path:"/add",
+        component:()=>import("../components/Homepage/main/goodslie/add.vue")
       }
     ]
   }
