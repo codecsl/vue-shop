@@ -78,7 +78,7 @@
 
 
       
-       <el-dialog title="物流进度" :visible.sync="zsdialogVisible" width="50%" >
+       <el-dialog title="物流进度" :visible.sync="zsdialogVisible" width="70%" >
          <el-timeline>
         <el-timeline-item
       v-for="(item, index) in wuliu"

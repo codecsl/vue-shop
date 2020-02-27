@@ -62,7 +62,8 @@
               type="danger"
               icon="el-icon-delete"
               size="small"
-              @click="shanchu(scope.row.id)"
+              @click="open(scope.row.id)"
+              
             >删除</el-button>
             <el-button
               type="warning"
@@ -120,15 +121,8 @@
         </span>
       </el-dialog>
 
-      <!-- 删除提示 -->
+     
 
-      <el-dialog title="警告" :visible.sync="dedialogVisible" width="50%" class="jian">
-        <span>确定删除该用户吗!</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dedialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="sc">确 定</el-button>
-        </span>
-      </el-dialog>
       <!-- 分配权限对话框 -->
       <el-dialog title="提示" :visible.sync="SedialogVisible" width="50%" class="jian" @close="gb">
         <el-tree
@@ -237,16 +231,27 @@ export default {
     quxiao() {
       this.cz("xiugai");
     },
-    shanchu(id) {
-      this.dedialogVisible = true;
-      this.scid = id;
-    },
-    sc() {
-      del(this.scid).then(res => {
-        this.jc("删除失败", "删除成功", res);
-      });
-      this.dedialogVisible = false;
-      this.zonginfo();
+    open(id) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+        del(id).then(res => {
+             this.jc("删除失败", "删除成功", res);
+            this.zongshuju(this.canshu)
+           
+          });
+          this.zonginfo();  
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+       
     },
     removeid(id1, id2) {
       this.$confirm("此操作将永久删除该权限, 是否继续?", "提示", {
@@ -324,7 +329,10 @@ export default {
         if (res1.meta.status != 200) return this.$message.error("获取数据失败");
         this.roleinfo = res1.data;
       });
-    }
+    },
+    created() {
+      this.zonginfo()
+    },
   }
 };
 </script>
