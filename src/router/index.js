@@ -50,6 +50,9 @@ const routes = [
       {
         path:"/orders",
         component:()=>import("../components/Homepage/main/dingdan/orders.vue")
+      },{
+        path:"/reports",
+        component:()=>import("../components/Homepage/main/tongji/tongji.vue")
       }
     ]
   }
